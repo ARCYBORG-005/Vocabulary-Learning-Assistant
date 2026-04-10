@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LexiForm</title>
+</head>
+<body>
+
+<h2>📘 LexiForm Vocabulary Assistant</h2>
+
+<form action="/add" method="POST">
+    <input type="text" name="word" placeholder="Enter word" required>
+    <button type="submit">Add</button>
+</form>
+
+<h3>Words</h3>
+<ul>
+    {% for w in words %}
+        <li>
+            {{ w }}
+            <a href="/practice/{{ w }}">Practice</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if current_word %}
+    <h3>Word: {{ current_word }}</h3>
+
+    <p><b>Meaning:</b> {{ meaning }}</p>
+    <p><b>Sentence:</b> {{ sentence }}</p>
+
+    <form action="/mcq/{{ current_word }}" method="POST">
+        {% for opt in options %}
+            <input type="radio" name="answer" value="{{ opt }}" required> {{ opt }} <br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if result %}
+        <p>{{ result }}</p>
+    {% endif %}
+{% endif %}
+
+</body>
+</html>
